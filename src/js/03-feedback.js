@@ -1,3 +1,4 @@
+import throttle from "lodash.throttle";
 const formRef = document.querySelector('.feedback-form');
 const FEED_BACK = 'feedback-form-state';
 
@@ -22,6 +23,7 @@ const submitForm = event => {
     const savedData = load(FEED_BACK);
     console.log(savedData);
     localStorage.removeItem(FEED_BACK)
+    formRef.reset()
 }
 
 // static
@@ -42,6 +44,7 @@ const load = key => {
     console.error('Get state error: ', error.message);
   }
 };
-formRef.addEventListener('input', HandleInput);
+const eventTrorle = throttle(HandleInput, 500)
+formRef.addEventListener('input', eventTrorle);
 formRef.addEventListener("submit", submitForm)
 initPage()
