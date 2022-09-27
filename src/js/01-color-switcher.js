@@ -9,7 +9,8 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 refs.btnStart.addEventListener("click", () => {
-    refs.btnStart.setAttribute("disabled", "disabled")
+   
+    refs.btnStart.disabled = true
     timerId = setInterval(() => {
     refs.bodyDocument.style.backgroundColor = getRandomHexColor();
       
@@ -18,7 +19,7 @@ refs.btnStart.addEventListener("click", () => {
 })
 
 refs.btnStop.addEventListener("click", ()=> {
-    refs.btnStart.removeAttribute("disabled", "disabled")
+    refs.btnStart.disabled = false;
     clearInterval(timerId)
 
 })
