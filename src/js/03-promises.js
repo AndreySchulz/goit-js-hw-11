@@ -53,7 +53,7 @@ function createPromise(position, delay) {
   })
   return promise
     .then(({ position, delay }) => {
-    Notify.success("`✅ Fulfilled promise ${position} in ${delay}ms`")
+    Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`)
     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
   })
     .catch(({ position, delay }) => {
