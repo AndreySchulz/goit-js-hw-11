@@ -1,7 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-const flatpickr = require("flatpickr");
+
 const refs= {
     startBtn: document.querySelector('[data-start]'),
     days : document.querySelector('[data-days]'),
