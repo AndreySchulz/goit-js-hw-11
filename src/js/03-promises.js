@@ -3,78 +3,45 @@ const refs = {
   formRef: document.querySelector('.form'),
   btnRef: document.querySelector('button'),
 };
-let dalayHandle = '';
-let stepHandle = '';
-let amountHandle = '';
-let positionHandle = 1
 
+refs.formRef.addEventListener('submit', onHanddleSubmit);
 
-refs.formRef.addEventListener('input', onHanddleClick);
-refs.btnRef.addEventListener('click', onBtnClick);
+function onHanddleSubmit(event) {
+  console.log(1);
+  event.preventDefault();
+  const {
+    elements: { delay, step, amount },
+  } = event.currentTarget;
 
+  let dalayHandle = Number(delay.value);
 
+  let stepHandle = Number(step.value);
 
-function onHanddleClick(event) {
+  let amountHandle = Number(amount.value);
 
-  switch (event.target.name) {
-    case 'delay':
-      dalayHandle = +event.target.value;
-      break;
-    case 'step':  
-      stepHandle = +event.target.value;
-      break;
-    case 'amount':
-      amountHandle = +event.target.value;
-      break;
-    default:'';
+  for (let i = 1; i <= amountHandle; i += 1) {
+    createPromise(i, dalayHandle)
+      .then(({ position, delay }) => {
+        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      })
+      .catch(({ position, delay }) => {
+        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+        console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+      });
+    dalayHandle += stepHandle;
   }
-
-
 }
 
 function createPromise(position, delay) {
-  const object = {
-    position: position,
-    delay: delay,
-  }
-  positionHandle += 1;
-
   const shouldResolve = Math.random() > 0.3;
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (shouldResolve) {
-      resolve(object)
-  } else {
-      reject(object)
-     }
-    }, dalayHandle) 
-    
-    
-  })
-  return promise
-    .then(({ position, delay }) => {
-    Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`)
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  })
-    .catch(({ position, delay }) => {
-     Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
   });
 }
-function amountPromise(amount) {
-  createPromise(positionHandle, dalayHandle)
-  
-  for (let i = 1; i <= amount; i += 1) {
-    dalayHandle+= stepHandle
-    createPromise(positionHandle, dalayHandle)
-  }
-  
-}
-function onBtnClick(event) {
-  event.preventDefault()
-  amountPromise(amountHandle)
-
- 
-
-}
-
