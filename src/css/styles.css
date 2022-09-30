@@ -22,3 +22,8 @@ body {
   list-style: none;
   padding: 0;
 }
+.country-list__item{
+  display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}

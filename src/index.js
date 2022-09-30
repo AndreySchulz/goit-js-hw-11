@@ -69,7 +69,7 @@ function createListCountry(response) {
   claenDiv();
   const countryListItem = response
     .map(country => {
-      return `<li class"country-list__item"><img src="${country.flags.svg}" alt="${country.name.official}" width="50px" style="
+      return `<li class="country-list__item"><img src="${country.flags.svg}" alt="${country.name.official}" width="50px" style="
     margin-right: 10px;
 ">${country.name.official}</li>`;
       console.log(1);
