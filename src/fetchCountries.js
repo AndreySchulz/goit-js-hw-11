@@ -10,7 +10,7 @@ function fetchCountries(counries) {
   });
 }
 
-export default { fetchCountries };
+export { fetchCountries };
 
 // name.official - полное имя страны
 // capital - столица

@@ -1,7 +1,7 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix';
-import API from './fetchCountries';
+import { fetchCountries } from './fetchCountries';
 
 const refs = {
   inputSearch: document.querySelector('#search-box'),
@@ -17,11 +17,9 @@ refs.inputSearch.addEventListener(
 
 function onHanndleInput(event) {
   event.preventDefault();
-  let searchCountry = event.target.value;
+  let searchCountry = event.target.value.trim();
   if (searchCountry.length > 1) {
-    API.fetchCountries(searchCountry.trim())
-      .then(renderCountryCard)
-      .catch(onErrorSearch);
+    fetchCountries(searchCountry).then(renderCountryCard).catch(onErrorSearch);
     return;
   }
   claenDiv();
@@ -35,7 +33,10 @@ function renderCountryCard(response) {
   }
 
   if (response.length >= 10) {
-    Notify.info('Too many matches found. Please enter a more specific name.');
+    Notify.info(
+      'Too many matches found. Please enter a more specific name.',
+      claenDiv()
+    );
     return;
   }
 
