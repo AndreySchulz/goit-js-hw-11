@@ -31,7 +31,6 @@ function renderCountryCard(response) {
   const [{ name, capital, population, flags, languages }] = response;
 
   if (response.length === 1) {
-    console.log(response);
     createCardCountry(name, capital, population, flags, languages);
   }
 
@@ -72,10 +71,9 @@ function createListCountry(response) {
       return `<li class="country-list__item"><img src="${country.flags.svg}" alt="${country.name.official}" width="50px" style="
     margin-right: 10px;
 ">${country.name.official}</li>`;
-      console.log(1);
     })
     .join('');
-  console.log(countryListItem);
+
   refs.countryList.insertAdjacentHTML('afterbegin', countryListItem);
 }
 
