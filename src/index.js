@@ -18,13 +18,13 @@ refs.inputSearch.addEventListener(
 function onHanndleInput(event) {
   event.preventDefault();
   let searchCountry = event.target.value;
-  if (searchCountry.length < 1) {
-    claenDiv();
+  if (searchCountry.length > 1) {
+    API.fetchCountries(searchCountry.trim())
+      .then(renderCountryCard)
+      .catch(onErrorSearch);
     return;
   }
-  API.fetchCountries(searchCountry.trim())
-    .then(renderCountryCard)
-    .catch(onErrorSearch);
+  claenDiv();
 }
 
 function renderCountryCard(response) {
@@ -78,5 +78,5 @@ function createListCountry(response) {
 }
 
 function onErrorSearch() {
-  return Notify.failure('Oops, there is no country with that name');
+  return Notify.failure('Oops, there is no country with that name', claenDiv());
 }
