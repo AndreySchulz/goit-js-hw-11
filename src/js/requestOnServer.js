@@ -6,7 +6,7 @@ import { createCardImage } from './createCard';
 export function requestOnServer(query, pageNumber) {
   getPhotos(query, pageNumber).then(data => {
     const { hits, totalHits, total } = data;
-
+    console.log(hits.length);
     if (totalHits === 0) {
       Notify.warning(
         'Sorry, there are no images matching your search query. Please try again'
@@ -17,7 +17,7 @@ export function requestOnServer(query, pageNumber) {
 
     refs.gallery.insertAdjacentHTML('beforeend', createCardImage(hits));
 
-    if (pageNumber === totalHits) {
+    if (hits.length === 0) {
       refs.loadMoreBtn.classList.add('is-hidden');
       refs.loadMoreBtn.removeEventListener('click', onClickLoadMore);
       return;

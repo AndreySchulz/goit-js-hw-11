@@ -12,6 +12,7 @@ export async function getPhotos(findPhoto, pageNumber) {
   const url = `?${keyApi}&q=${findPhoto}&${searchParams}&page=${pageNumber}`;
   return await axios.get(url).then(response => {
     const { data } = response;
+    console.log(data);
     return data;
   });
 }

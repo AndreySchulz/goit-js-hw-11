@@ -30,6 +30,7 @@ function onClickLoadMore(e) {
 refs.searchForm.addEventListener('submit', onSubmitForm);
 
 function cleanDiv() {
+  pageNumber = 1;
   refs.gallery.innerHTML = '';
   refs.loadMoreBtn.classList.add('is-hidden');
 }
