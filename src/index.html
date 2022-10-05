@@ -4,12 +4,35 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homework 10</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
+    />
+    <title>Homework 11</title>
   </head>
   <body>
-    <input type="text" id="search-box" />
-    <ul class="country-list"></ul>
-    <div class="country-info"></div>
+    <header>
+      <div class="container">
+        <form class="search-form" id="search-form">
+          <input
+            class="search-form__input"
+            type="text"
+            name="searchQuery"
+            autocomplete="off"
+            placeholder="Search images..."
+          />
+          <button class="search-form__button" type="submit">&#128269;</button>
+        </form>
+      </div>
+    </header>
+    <main>
+      <section>
+        <div class="gallery">
+          <!-- Карточки изображений -->
+        </div>
+        <button type="button" class="load-more is-hidden">Load more</button>
+      </section>
+    </main>
 
     <script src="index.js" type="module"></script>
   </body>

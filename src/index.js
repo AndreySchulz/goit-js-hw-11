@@ -1,83 +1,31 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix';
-import { fetchCountries } from './fetchCountries';
+import { refs } from './js/refs';
+import { requestOnServer, createCardImage } from './js/requestOnServer';
 
-const refs = {
-  inputSearch: document.querySelector('#search-box'),
-  countryList: document.querySelector('.country-list'),
-  countryInfo: document.querySelector('.country-info'),
-};
-const DEBOUNCE_DELAY = 300;
+let pageNumber = 1;
+let query = '';
+function onSubmitForm(e) {
+  e.preventDefault();
+  cleanDiv();
+  const {
+    elements: { searchQuery },
+  } = e.currentTarget;
 
-refs.inputSearch.addEventListener(
-  'input',
-  debounce(onHanndleInput, DEBOUNCE_DELAY)
-);
-
-function onHanndleInput(event) {
-  event.preventDefault();
-  let searchCountry = event.target.value.trim();
-  if (searchCountry.length > 1) {
-    fetchCountries(searchCountry).then(renderCountryCard).catch(onErrorSearch);
-    return;
-  }
-  claenDiv();
+  query = searchQuery.value.trim().toLowerCase();
+  requestOnServer(query, pageNumber);
 }
 
-function renderCountryCard(response) {
-  const [{ name, capital, population, flags, languages }] = response;
+function onClickLoadMore(e) {
+  pageNumber += 1;
 
-  if (response.length === 1) {
-    createCardCountry(name, capital, population, flags, languages);
-  }
-
-  if (response.length >= 10) {
-    Notify.info(
-      'Too many matches found. Please enter a more specific name.',
-      claenDiv()
-    );
-    return;
-  }
-
-  if (response.length >= 2 && response.length < 10) {
-    createListCountry(response);
-  }
+  requestOnServer(query, pageNumber);
 }
 
-function claenDiv() {
-  refs.countryInfo.innerHTML = '';
-  refs.countryList.innerHTML = '';
-}
+refs.searchForm.addEventListener('submit', onSubmitForm);
+refs.loadMoreBtn.addEventListener('click', onClickLoadMore);
 
-function createCardCountry(name, capital, population, flags, languages) {
-  claenDiv();
-  const countryCard = `
-    
-        <h1><img src="${flags.svg}" alt="${name.official}" width="50px" style="
-    margin-right: 10px;">${name.official}</h1>
-        <ul style ="list-style: none;
-  padding: 0;">
-        <li><b>Capital:</b> ${capital[0]}</li>
-        <li><b>Population:</b> ${population}</li>
-        <li><b>Languages:</b> ${Object.values(languages)}</li>
-        </ul>`;
-  refs.countryInfo.innerHTML = countryCard;
-}
-
-function createListCountry(response) {
-  claenDiv();
-  const countryListItem = response
-    .map(country => {
-      return `<li class="country-list__item"><img src="${country.flags.svg}" alt="${country.name.official}" width="50px" style="
-    margin-right: 10px;
-">${country.name.official}</li>`;
-    })
-    .join('');
-
-  refs.countryList.insertAdjacentHTML('afterbegin', countryListItem);
-}
-
-function onErrorSearch() {
-  return Notify.failure('Oops, there is no country with that name', claenDiv());
+function cleanDiv() {
+  refs.gallery.innerHTML = '';
 }
