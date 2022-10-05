@@ -5,23 +5,22 @@ import { Notify } from 'notiflix';
 export function requestOnServer(query, pageNumber) {
   getPhotos(query, pageNumber).then(data => {
     const { hits, totalHits, total } = data;
-
+    console.log(data);
     if (totalHits === 0) {
       Notify.warning(
-        "We're sorry, but you've reached the end of search results."
+        'Sorry, there are no images matching your search query. Please try again'
       );
-    } else {
-      Notify.success(`Hooray! We found ${totalHits} images.`);
+      return;
     }
+    Notify.success(`Hooray! We found ${totalHits} images.`);
 
     refs.gallery.insertAdjacentHTML('beforeend', createCardImage(hits));
 
-    if (totalHits >= pageNumber) {
-      //   refs.loadMoreBtn.classList.add('is-hidden');
-      refs.loadMoreBtn.classList.remove('is-hidden');
+    if (pageNumber === totalHits) {
+      refs.loadMoreBtn.classList.add('is-hidden');
+      return;
     }
-
-    //
+    refs.loadMoreBtn.classList.remove('is-hidden');
   });
 }
 export function createCardImage(hits) {
