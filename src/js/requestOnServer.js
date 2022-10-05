@@ -6,7 +6,7 @@ import { createCardImage } from './createCard';
 export function requestOnServer(query, pageNumber) {
   getPhotos(query, pageNumber).then(data => {
     const { hits, totalHits, total } = data;
-    console.log(hits.length);
+
     if (totalHits === 0) {
       Notify.warning(
         'Sorry, there are no images matching your search query. Please try again'
@@ -19,6 +19,7 @@ export function requestOnServer(query, pageNumber) {
 
     if (hits.length < 40) {
       refs.loadMoreBtn.classList.add('is-hidden');
+      Notify.info("We're sorry, but you've reached the end of search results.");
 
       return;
     }
