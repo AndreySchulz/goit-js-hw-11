@@ -1,11 +1,14 @@
 import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import { refs } from './js/refs';
-import { requestOnServer, createCardImage } from './js/requestOnServer';
+import { requestOnServer } from './js/requestOnServer';
 
 let pageNumber = 1;
 let query = '';
+
 function onSubmitForm(e) {
   e.preventDefault();
   cleanDiv();
@@ -15,6 +18,7 @@ function onSubmitForm(e) {
 
   query = searchQuery.value.trim().toLowerCase();
   requestOnServer(query, pageNumber);
+  refs.loadMoreBtn.addEventListener('click', onClickLoadMore);
 }
 
 function onClickLoadMore(e) {
@@ -24,8 +28,8 @@ function onClickLoadMore(e) {
 }
 
 refs.searchForm.addEventListener('submit', onSubmitForm);
-refs.loadMoreBtn.addEventListener('click', onClickLoadMore);
 
 function cleanDiv() {
   refs.gallery.innerHTML = '';
+  refs.loadMoreBtn.classList.add('is-hidden');
 }

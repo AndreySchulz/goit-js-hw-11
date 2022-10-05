@@ -68,26 +68,30 @@ section {
 }
 .photo-card {
   width: calc((100% - 3 * 15px) / 4);
+  margin-bottom: 15px;
 }
 .photo-card__img {
   width: 100%;
-  height: 160px;
+  max-height: 225px;
 }
 .info {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 .info-item {
+  display: flex;
+  flex-direction: column;
   font-size: 10px;
   text-align: center;
+  margin: 5px;
 }
 
 /* btn */
 .load-more {
   width: 120px;
   height: 35px;
-  background-color: #80808069;
+  background-color: #80808026;
   border-radius: 10px;
   border: none;
   cursor: pointer;
