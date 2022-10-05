@@ -34,3 +34,4 @@ function cleanDiv() {
   refs.gallery.innerHTML = '';
   refs.loadMoreBtn.classList.add('is-hidden');
 }
+// deploy
